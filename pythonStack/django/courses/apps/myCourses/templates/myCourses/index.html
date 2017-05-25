@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      {% block title %}
+        Courses
+      {% endblock title %}
+    </title>
+  </head>
+  {% block content %}
+
+  <body>
+    <div class="container">
+      <h2>Add a new course</h2>
+    <form action="courses/create" method="post">
+      {% csrf_token %}
+      Name: <p><input type="text" name="name"></p>
+      Description: <p><textarea name="description"></textarea></p>
+      <p><input type="submit" name="add" value="Add"></p>
+    </form>
+      <h2>Courses</h2>
+      <table>
+        <tr>
+          <th>Course Name</th>
+          <th>Description</th>
+          <th>Date Added</th>
+          <th>Actions</th>
+        </tr>
+        {% for course in courses %}
+        <tr>
+          <td>{{ course.name }}</td>
+          <td>{{ course.description }}</td>
+          <td>{{ course.created_at }}</td>
+          <td><a href="courses/destroy/{{ course.id }}">remove</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
+</html>
+{% endblock content %}
